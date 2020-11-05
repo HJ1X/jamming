@@ -3,6 +3,7 @@ import './App.css';
 import SearchBar from "../SearchBar/SearchBar";
 import SearchResults from "../SearchResults/SearchResults";
 import Playlist from "../Playlist/Playlist";
+import TrackList from '../TrackList/TrackList';
 
 function App(props) {
     const [searchResults, setSearchResults] = useState([
@@ -42,6 +43,11 @@ function App(props) {
         setPlaylistTracks(prevtracks => [...prevtracks, track]);
     }
 
+    const removeTrack = track => {
+        let newPlayList = playlistTracks.filter(savedtrack => savedtrack.id !== track.id);
+        setPlaylistTracks(newPlayList);
+    }
+
     return (
         <div>
             <h1>Ja<span className="highlight">mmm</span>ing</h1>
@@ -49,7 +55,7 @@ function App(props) {
                 <SearchBar />
                 <div className="App-playlist">
                     <SearchResults onAdd={addTrack} searchResults={searchResults}/>
-                    <Playlist playlistName={playlistName} playlistTracks={playlistTracks} />
+                    <Playlist onRemove={removeTrack} playlistName={playlistName} playlistTracks={playlistTracks} />
                 </div>
             </div>
         </div>
