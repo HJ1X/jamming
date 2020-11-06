@@ -1,5 +1,3 @@
-import SearchBar from "../Components/SearchBar/SearchBar";
-
 accessToken = '';
 clientID = '2f9debe56f334a06b1d87a74a6cda91f';
 redirectURI = "http://localhost:3000/";

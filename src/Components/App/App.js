@@ -3,6 +3,7 @@ import './App.css';
 import SearchBar from "../SearchBar/SearchBar";
 import SearchResults from "../SearchResults/SearchResults";
 import Playlist from "../Playlist/Playlist";
+import Spotify from '../../util/Spotify';
 
 function App(props) {
     const [searchResults, setSearchResults] = useState([
@@ -55,8 +56,9 @@ function App(props) {
         const trackURIs = playlistTracks.map(track => track.uri);
     }
 
-    const search = searchTerm => {
-        console.log(searchTerm);
+    const search = async (searchTerm) => {
+        const tracks = await Spotify.search(searchTerm);
+        setSearchResults(tracks);
     }
 
     return (
