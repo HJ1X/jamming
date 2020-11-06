@@ -51,6 +51,10 @@ function App(props) {
         setPlaylistName(name);
     }
 
+    const savePlaylist = () => {
+        const trackURIs = playlistTracks.map(track => track.uri);
+    }
+
     return (
         <div>
             <h1>Ja<span className="highlight">mmm</span>ing</h1>
@@ -58,7 +62,7 @@ function App(props) {
                 <SearchBar />
                 <div className="App-playlist">
                     <SearchResults onAdd={addTrack} searchResults={searchResults}/>
-                    <Playlist onRemove={removeTrack} onNameChange={updatePlaylistName} playlistTracks={playlistTracks} />
+                    <Playlist onRemove={removeTrack} onNameChange={updatePlaylistName} onSave={savePlaylist} playlistTracks={playlistTracks} />
                 </div>
             </div>
         </div>
