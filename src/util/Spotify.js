@@ -26,7 +26,7 @@ const Spotify = {
     searchOnSuccess(response) {
         return response.tracks.items.map(track => {
             return {
-                track: track.id,
+                id: track.id,
                 name: track.name,
                 artist: track.artists[0].name,
                 album: track.album.name,
