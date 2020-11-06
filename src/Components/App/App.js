@@ -6,35 +6,9 @@ import Playlist from "../Playlist/Playlist";
 import Spotify from '../../util/Spotify';
 
 function App(props) {
-    const [searchResults, setSearchResults] = useState([
-        {
-            name: 'Ek Tarfa-Reprise',
-            artist: 'Darshan Raval',
-            album: 'Ek Tarfa',
-            id: 'bla'
-        },
-        {
-            name: 'Ek Tarfa',
-            artist: 'Darshan Raval',
-            album: 'Ek Tarfa',
-            id: 'bla-bla'
-        }
-    ]);
-    const [playlistName, setPlaylistName] = useState('HJ');
-    const [playlistTracks, setPlaylistTracks] = useState([
-        {
-            name: 'Ek Tarfa-Reprise',
-            artist: 'Darshan Raval',
-            album: 'Ek Tarfa',
-            id: 'bla'
-        },
-        {
-            name: 'Ek Tarfa HJ',
-            artist: 'Darshan Raval',
-            album: 'Ek Tarfa',
-            id: 'bla-bla'
-        }
-    ])
+    const [searchResults, setSearchResults] = useState([]);
+    const [playlistName, setPlaylistName] = useState();
+    const [playlistTracks, setPlaylistTracks] = useState([])
 
     const addTrack = track => {
         if (playlistTracks.find(savedTracks => savedTracks.id === track.id)) {

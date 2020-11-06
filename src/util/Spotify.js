@@ -1,28 +1,30 @@
-let accessToken = '';
+let accessToken;
 const clientID = '2f9debe56f334a06b1d87a74a6cda91f';
 const redirectURI = "http://localhost:3000/";
 
 const Spotify = {
     getAccessToken() {
-        if (accesToken) { 
-            return accesToken;
+        if (accessToken) { 
+            return accessToken;
         }
-        window.location = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`
         const url = window.location.href;
         const userAccessToken = url.match(/access_token=([^&]*)/);
         const expirationTime = url.match(/expires_in=([^&]*)/);
         if (userAccessToken && expirationTime) {
-            accessToken = userAccessToken;
-            const expiresIn = expirationTime;
+            accessToken = userAccessToken[1];
+            const expiresIn = Number(expirationTime[1]);
             window.setTimeout(() => {
                 accessToken = '';
             }, expiresIn * 1000);
             window.history.pushState('Access Token', null, '/');
+            return accessToken;
+        } else {
+            window.location = `https://accounts.spotify.com/authorize?client_id=${clientID}&response_type=token&scope=playlist-modify-public&redirect_uri=${redirectURI}`
         }
     },
 
     searchOnSuccess(response) {
-        return response.items.map(track => {
+        return response.tracks.items.map(track => {
             return {
                 track: track.id,
                 name: track.name,
@@ -34,6 +36,7 @@ const Spotify = {
     },
 
     search(searchTerm) {
+        accessToken = Spotify.getAccessToken();
         const endpoint = 'https://api.spotify.com/v1/search?type=track&q=' + searchTerm;
         return fetch(endpoint, {
             headers: {
@@ -42,8 +45,7 @@ const Spotify = {
         }).then(response => {
             if (response.ok) {
                 return response.json();
-            }
-            throw new Error('Request failed!');
+            }    
         }, networkError => {
             console.log(networkError.message)
         }).then(jsonResponse => {
@@ -51,8 +53,8 @@ const Spotify = {
         })
     },
 
-    savePlaylist = async (playlistName, trackURIs) => {
-        if (!(name && trackURIs)) return;
+    async savePlaylist(playlistName, trackURIs) {
+        if (!(playlistName && trackURIs)) return;
         const userAccessToken = accessToken;
         const headers = { Authorization: 'Bearer ' + userAccessToken };
         let userID = '';
