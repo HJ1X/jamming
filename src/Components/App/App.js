@@ -3,7 +3,6 @@ import './App.css';
 import SearchBar from "../SearchBar/SearchBar";
 import SearchResults from "../SearchResults/SearchResults";
 import Playlist from "../Playlist/Playlist";
-import TrackList from '../TrackList/TrackList';
 
 function App(props) {
     const [searchResults, setSearchResults] = useState([
@@ -48,6 +47,10 @@ function App(props) {
         setPlaylistTracks(newPlayList);
     }
 
+    const updatePlaylistName = name => {
+        setPlaylistName(name);
+    }
+
     return (
         <div>
             <h1>Ja<span className="highlight">mmm</span>ing</h1>
@@ -55,7 +58,7 @@ function App(props) {
                 <SearchBar />
                 <div className="App-playlist">
                     <SearchResults onAdd={addTrack} searchResults={searchResults}/>
-                    <Playlist onRemove={removeTrack} playlistName={playlistName} playlistTracks={playlistTracks} />
+                    <Playlist onRemove={removeTrack} onNameChange={updatePlaylistName} playlistTracks={playlistTracks} />
                 </div>
             </div>
         </div>
